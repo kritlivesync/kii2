@@ -1,6 +1,6 @@
 {
   "name": "kii2",
-  "description": "kii wrapper for express framework",
+  "description": "kii2 wrapper for express framework",
   "version": "0.0.1",
   "author": {
     "name": "kritinline",
@@ -19,7 +19,7 @@
   },
   "preferGlobal": true,
   "bin": {
-    "kii": "./bin/cli.js"
+    "kii2": "./bin/cli.js"
   },
   "dependencies": {
     "async": "*",
