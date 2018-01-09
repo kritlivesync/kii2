@@ -1,0 +1,15 @@
+<snippet>
+    <content><![CDATA[extends ../layout
+
+block content
+  .main-content(role='main',ng-controller="${0:App}Controller")
+    .wrapper
+      .col-aside
+        ul.sub-nav
+          li: a(href='/') Menu
+      .col-main.content
+        h1 ${1:Title}]]></content>
+    <tabTrigger>jade</tabTrigger>
+    <scope>text.html(.basic)</scope>
+    <description>jade</description>
+</snippet>
