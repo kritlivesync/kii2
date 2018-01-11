@@ -11,7 +11,7 @@ var
     qr = require('qr-image'),
     moment = require('moment'),
     exec = require('child_process').exec,
-    nodemailer = require('nodemailer'),
+    nodemailer = require('nodemailer');
 
 global._ = lodash;
 

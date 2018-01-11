@@ -3,8 +3,8 @@ exports.init = function(config) {
         express = require('express'),
         path = require('path'),
         http = require('http'),
-        app = express();
-
+        app = express(),
+        server = http.createServer(app);
     /**
      * C : config
      * M : model
@@ -18,18 +18,18 @@ exports.init = function(config) {
     global.D = {}; //data base
     global.M = {}; //middle where
     global.S = {}; //service
-    global.R = require('kii/init/cache.js'); //redis
-    global.F = require('kii/init/funcs.js'); //function
+    global.R = require('kii2/init/cache.js'); //redis
+    global.F = require('kii2/init/funcs.js'); //function
 
-    require('kii/init/models.js'); // model
-    require('kii/init/middles.js'); // middle
-    require('kii/init/boot.js')(app); // model
-    require('kii/init/services.js'); // service
-    require('kii/init/routes.js')(app, express); // router
-    require('kii/init/socket.js')(server);
+    require('kii2/init/models.js'); // model
+    require('kii2/init/middles.js'); // middle
+    require('kii2/init/boot.js')(app); // model
+    require('kii2/init/services.js'); // service
+    require('kii2/init/routes.js')(app, express); // router
+    require('kii2/init/socket.js')(server);
 
     // start server
-    server = http.createServer(app)
+    
     server.listen(C.port, () => {
         console.log(`start http server ${C.domain.www} at ${C.port}`)
     });
