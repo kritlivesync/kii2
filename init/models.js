@@ -5,7 +5,7 @@ var
 
 mongoose.Promise = global.Promise;
 D.ObjectId = mongoose.mongo.ObjectId;
-
+D.ObjectValid = mongoose.Types.ObjectId.isValid;
 function eachModel(db, dir) {
     F.file.readdirSync(dir).forEach((name) => {
         if (F.path.extname(name) == '.js') {

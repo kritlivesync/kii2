@@ -43,7 +43,7 @@
     "nodemailer": "*",
     "qr-image": "*",
     "redis": "*",
-    "jade": "*",
+    "swig": "*",
     "ws": "2.3.0"
   }
 }

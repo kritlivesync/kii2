@@ -1,7 +1,7 @@
 var
     funcs,
     url = require('url'),
-    jade = require("jade"),
+    swig = require('swig'),
     crypto = require('crypto'),
     lodash = require('lodash'),
     fs = require('fs-extra'),
@@ -11,9 +11,15 @@ var
     qr = require('qr-image'),
     moment = require('moment'),
     exec = require('child_process').exec,
-    nodemailer = require('nodemailer');
+    nodemailer = require('nodemailer'),
+    filters = require('./filters');
 
 global._ = lodash;
+
+for(var key in filters) {
+    var fn = filters[key];
+    swig.setFilter(key, fn);
+}
 
 funcs = {
     id: uuid,
@@ -21,6 +27,7 @@ funcs = {
     forEachSeries: async.forEach,
     parallel: async.parallel,
     waterfall: async.waterfall,
+    swig: swig,
     date: moment,
     exec: exec,
     path: path,
@@ -41,7 +48,7 @@ funcs = {
         }
     },
     tpl: function(path,data){
-        return jade.renderFile(C.dir.view + path, data);
+        return swig.compileFile(C.dir.view + path);
     },
     random: function(minimum, maximum) {
         return Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;

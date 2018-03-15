@@ -1,0 +1,33 @@
+{% extends 'layout.html' %} {% block title %}{% endblock %} {% block content %}
+
+<div class="container" ng-controller="AppController">
+	<div class="row">
+		<div class="col-12 col-md-12">
+			<h1>{{ __(title) }}</h1>
+			<hr />
+			<p>Welcome to {{ __(title) }}</p>
+			<p>
+				Socket used: <div ng-bind="data.data"></div>
+			</p>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block js %}
+    <script type="text/javascript">
+{% autoescape false %}
+	    angular.module('App', [])
+	      .controller('AppController', function($scope,$http) {
+	      	{% autoescape false %}
+	      	$scope.data = {{input | json}}
+	      	{% endautoescape %}
+
+			var ws = new WebSocket('{{socket}}');
+			ws.onmessage = function (event) {
+				$scope.data = JSON.parse(event.data)
+				$scope.$apply();
+			};
+	      });
+{% endautoescape %}	
+    </script>
+{% endblock %}

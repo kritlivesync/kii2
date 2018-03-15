@@ -6,6 +6,7 @@ module.exports = function(app) {
         session = require('express-session'),
         RedisStore = require('connect-redis')(session),
         i18n = require('i18n'),
+        swig = require('swig'),
         helmet = require('helmet');
         multer = require('multer');
 
@@ -13,7 +14,8 @@ module.exports = function(app) {
     app.use(logger('dev'));
     app.enable('trust proxy');
     app.disable('x-powered-by');
-    app.set('view engine', 'jade');
+    app.engine('html', swig.renderFile);
+    app.set('view engine', 'html');
     app.set('views', C.dir.view);
     app.use(multer({ dest: C.dir.static }).any());
     app.use(bodyParser.json({ limit: '50mb' }));
