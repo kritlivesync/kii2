@@ -15,6 +15,7 @@ exports.init = function(config) {
         socket:{},
     };
     global.C = config; //config
+    global.L = {}; //local session
     global.D = {}; //data base
     global.M = {}; //middle where
     global.S = {}; //service

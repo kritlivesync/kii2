@@ -1,3 +1,8 @@
 module.exports = async(info, next) => {
-    next(true)
+    console.log('Parsing session from request...');
+    R.session(info.req, {}, () => {
+
+      console.log(info.req.session);
+      next(true);
+    });
 };

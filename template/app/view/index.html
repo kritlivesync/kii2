@@ -1,33 +1,77 @@
-{% extends 'layout.html' %} {% block title %}{% endblock %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <title>Express session demo</title>
+  </head>
+  <body>
+    <h1>Choose an action.</h1>
+    <button id="login" type="button" title="Simulate login">
+      Simulate login
+    </button>
+    <button id="logout" type="button" title="Simulate logout">
+      Simulate logout
+    </button>
+    <button id="wsButton" type="button" title="Open WebSocket connection">
+      Open WebSocket connection
+    </button>
+    <button id="sendButton" type="button" title="Open WebSocket connection">
+      Open WebSocket connection
+    </button>
+    <pre id="messages" style="height: 400px; overflow: scroll"></pre>
+    <script>
+      const messages = document.querySelector('#messages');
+      const wsButton = document.querySelector('#wsButton');
+      const sendButton = document.querySelector('#sendButton');
+      const logout = document.querySelector('#logout');
+      const login = document.querySelector('#login');
 
-<div class="container" ng-controller="AppController">
-	<div class="row">
-		<div class="col-12 col-md-12">
-			<h1>{{ __(title) }}</h1>
-			<hr />
-			<p>Welcome to {{ __(title) }}</p>
-			<p>
-				Socket used: <div ng-bind="data.data"></div>
-			</p>
-		</div>
-	</div>
-</div>
-{% endblock %}
-{% block js %}
-    <script type="text/javascript">
-{% autoescape false %}
-	    angular.module('App', [])
-	      .controller('AppController', function($scope,$http) {
-	      	{% autoescape false %}
-	      	$scope.data = {{input | json}}
-	      	{% endautoescape %}
+      const showMessage = (message) => {
+        messages.textContent += `\n${message}`;
+        messages.scrollTop = messages.scrollHeight;
+      };
 
-			var ws = new WebSocket('{{socket}}');
-			ws.onmessage = function (event) {
-				$scope.data = JSON.parse(event.data)
-				$scope.$apply();
-			};
-	      });
-{% endautoescape %}	
+      const handleResponse = (response) => {
+        return response.ok
+          ? response.json().then((data) => JSON.stringify(data, null, 2))
+          : Promise.reject(new Error('Unexpected response'));
+      };
+
+      login.onclick = () => {
+        fetch('/login', { method: 'POST', credentials: 'same-origin' })
+          .then(handleResponse)
+          .then(showMessage)
+          .catch((err) => showMessage(err.message));
+      };
+
+      logout.onclick = () => {
+        fetch('/logout', { method: 'DELETE', credentials: 'same-origin' })
+          .then(handleResponse)
+          .then(showMessage)
+          .catch((err) => showMessage(err.message));
+      };
+
+      let ws;
+      wsButton.onclick = () => {
+        if (ws) {
+          ws.onerror = ws.onopen = ws.onclose = null;
+          ws.close();
+        }
+
+        ws = new WebSocket(`ws://${location.host}`);
+        ws.onerror = () => showMessage('WebSocket error');
+        ws.onopen = () => showMessage('WebSocket connection established');
+        ws.onclose = () => showMessage('WebSocket connection closed');
+      };
+      sendButton.onclick = () => {
+        if (ws) {
+          ws.onerror = ws.onopen = ws.onclose = null;
+          ws.send('aa'+Date.now());
+        }
+      };
+      
     </script>
-{% endblock %}
+  </body>
+</html>
+
+

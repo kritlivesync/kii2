@@ -3,12 +3,19 @@ module.exports = function(app) {
         logger = require('morgan'),
         bodyParser = require('body-parser'),
         cookieParser = require('cookie-parser'),
-        session = require('express-session'),
-        RedisStore = require('connect-redis')(session),
+        Session = require('express-session'),
+        RedisStore = require('connect-redis')(Session),
         i18n = require('i18n'),
         swig = require('swig'),
-        helmet = require('helmet');
         multer = require('multer');
+
+    L.session  = Session({
+        store: new RedisStore({ client: R }),
+        secret: C.secret,
+        resave: true,
+        saveUninitialized: true,
+        proxy: true
+    });
 
     // app use
     app.use(logger('dev'));
@@ -20,24 +27,7 @@ module.exports = function(app) {
     app.use(multer({ dest: C.dir.static }).any());
     app.use(bodyParser.json({ limit: '50mb' }));
     app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-    app.use(cookieParser());
-    app.use(session({
-        store: new RedisStore({ client: R }),
-        secret: C.secret,
-        resave: true,
-        saveUninitialized: true,
-        proxy: true
-    }));
-    app.use(helmet.frameguard());
-    app.use(helmet.noSniff());
-    app.use(helmet.xssFilter());
-    app.use(helmet.ieNoOpen());
-    app.use(helmet.hsts({
-      "maxAge": 15778476000,
-      "includeSubdomains": true,
-      "force": true
-    }));
-    app.use(helmet.hsts());
+    app.use( L.session);
     app.use(i18n.init);
     i18n.configure({
         updateFiles: false,
