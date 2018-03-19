@@ -63,10 +63,10 @@
         ws.onopen = () => showMessage('WebSocket connection established');
         ws.onclose = () => showMessage('WebSocket connection closed');
       };
+
       sendButton.onclick = () => {
         if (ws) {
-          ws.onerror = ws.onopen = ws.onclose = null;
-          ws.send('aa'+Date.now());
+          ws.send(JSON.stringify({type:'request','data':Date.now()}));
         }
       };
       

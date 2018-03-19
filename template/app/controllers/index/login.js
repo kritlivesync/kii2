@@ -1,7 +1,7 @@
 module.exports = async(app) => {
     app
-        .route('/')
-        .post('/login', (req, res) => {
+        .route('/login')
+        .post((req, res) => {
           const id = Date.now();
 
           console.log(`Updating session for user ${id}`);
