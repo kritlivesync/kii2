@@ -65,6 +65,9 @@
         ws = new WebSocket(`ws://${location.host}`);
         ws.onerror = () => showMessage('WebSocket error');
         ws.onopen = () => showMessage('WebSocket connection established');
+        ws.onmessage = (event) => {
+          showMessage(event.data);
+        }
         ws.onclose = () => showMessage('WebSocket connection closed');
       };
 
@@ -73,6 +76,7 @@
           ws.send(JSON.stringify({type:'request','data':Date.now()}));
         }
       };
+
       restButton.onclick = () => {
         fetch('/noti', { method: 'POST', credentials: 'same-origin' })
           .then(handleResponse)
