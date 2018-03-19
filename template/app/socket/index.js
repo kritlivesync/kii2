@@ -1,7 +1,12 @@
 const SocketServer = async(req, ws, io) => {
-    var id = setInterval(() => {
-        ws.send(JSON.stringify({ data: Date.now() }), () => {});
-    }, 100);
+    var sub = R.instance()
+    var room = req.session.login? ["public","user:"+req.session.user._id] : ["public"]
+    
+    sub.subscribe(room);
+    sub.on("message", function(channel, message) {
+      console.log("send '" + message + "' to client")
+      ws.send(message, () => {}); //json stringify
+    });
 
     ws.on('message', async(input) => {
         var
@@ -10,7 +15,8 @@ const SocketServer = async(req, ws, io) => {
     });
 
     ws.on('close', async() => {
-        clearInterval(id);
+        console.log("close client")
+        sub.quit();
     });
 };
 module.exports = SocketServer;

@@ -5,7 +5,8 @@ module.exports = async(app) => {
           const id = Date.now();
 
           console.log(`Updating session for user ${id}`);
-          req.session.userId = id;
+          req.session.login = true
+          req.session.user = {_id:id};
           res.send({ result: 'OK', message: 'Session updated' });
         });
 

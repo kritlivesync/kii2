@@ -15,14 +15,18 @@
     <button id="wsButton" type="button" title="Open WebSocket connection">
       Open WebSocket connection
     </button>
-    <button id="sendButton" type="button" title="Open WebSocket connection">
-      Open WebSocket connection
+    <button id="sendButton" type="button" title="Send message to socket">
+     Send socket
+    </button>
+    <button id="restButton" type="button" title="send noti">
+      send Rest
     </button>
     <pre id="messages" style="height: 400px; overflow: scroll"></pre>
     <script>
       const messages = document.querySelector('#messages');
       const wsButton = document.querySelector('#wsButton');
       const sendButton = document.querySelector('#sendButton');
+      const resrButton = document.querySelector('#restButton');
       const logout = document.querySelector('#logout');
       const login = document.querySelector('#login');
 
@@ -69,7 +73,12 @@
           ws.send(JSON.stringify({type:'request','data':Date.now()}));
         }
       };
-      
+      restButton.onclick = () => {
+        fetch('/noti', { method: 'POST', credentials: 'same-origin' })
+          .then(handleResponse)
+          .then(showMessage)
+          .catch((err) => showMessage(err.message));
+      };
     </script>
   </body>
 </html>
