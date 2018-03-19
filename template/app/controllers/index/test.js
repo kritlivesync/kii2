@@ -1,6 +1,6 @@
 module.exports = async(app) => {
     app
-        .route('/noti/:id')
+        .route('/test/:id')
         .post((req, res) => {
           var id = req.params.id;
  		  R.publish("user:"+id, JSON.stringify({data:Date.now()}));
