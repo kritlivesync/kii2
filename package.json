@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "async": "*",
-    "authenticator": "*",
+    "authenticate": "^0.1.5",
     "body-parser": "*",
     "bluebird": "*",
     "connect-redis": "*",
