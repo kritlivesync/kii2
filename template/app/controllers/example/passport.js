@@ -3,6 +3,7 @@ module.exports = async(app) => {
             console.log(req.user)
             res.render('example/account', { user: req.user });
         });
+
         app.get('/passport/login', (req, res) => {
             console.log(req.user)
             res.render('example/login', { user: req.user });
@@ -26,7 +27,6 @@ module.exports = async(app) => {
         // app.get('/passport/auth/linkedin/callback', L.passport.authenticate('linkedin', { failureRedirect: '/passport/login' }), (req, res) => {
         //     res.redirect('/passport/login'); 
         // });
-
 
         app.get('/passport/logout', (req, res) => {
             req.logout();
