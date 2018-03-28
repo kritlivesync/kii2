@@ -2,6 +2,7 @@ exports.init = function(config) {
     var
         express = require('express'),
         path = require('path'),
+        passport = require('passport'),
         http = require('http'),
         app = express(),
         server = http.createServer(app);
@@ -25,6 +26,7 @@ exports.init = function(config) {
     require('kii2/init/models.js'); // model
     require('kii2/init/middles.js'); // middle
     require('kii2/init/boot.js')(app); // model
+    require('kii2/init/passport');
     require('kii2/init/services.js'); // service
     require('kii2/init/routes.js')(app, express); // router
     require('kii2/init/socket.js')(server);

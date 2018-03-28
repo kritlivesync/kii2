@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-      <meta charset="utf-8">
-      <title>Express session demo</title>
-  </head>
-  <body>
-    <h1>Choose an action.</h1>
+{% extends 'layout.html' %}
+{% block content %}
+{% if (!user) %}
+  <h2>Welcome! Please log in.</h2>
+{% else %}
+  <h2>Hello, {{user.displayName}}</h2>
+{% endif %}
+
     <button id="login" type="button" title="Simulate login">
       Simulate login
     </button>
@@ -21,7 +21,7 @@
     <button id="restButton" type="button" title="send noti">
       send Rest
     </button>
-    <pre id="messages" style="height: 400px; overflow: scroll"></pre>
+    <pre id="messages" style="height: 300px; overflow: scroll"></pre>
     <script>
       const messages = document.querySelector('#messages');
       const wsButton = document.querySelector('#wsButton');
@@ -42,14 +42,14 @@
       };
 
       login.onclick = () => {
-        fetch('/login', { method: 'POST', credentials: 'same-origin' })
+        fetch('/socket/login', { method: 'POST', credentials: 'same-origin' })
           .then(handleResponse)
           .then(showMessage)
           .catch((err) => showMessage(err.message));
       };
 
       logout.onclick = () => {
-        fetch('/logout', { method: 'DELETE', credentials: 'same-origin' })
+        fetch('/socket/logout', { method: 'DELETE', credentials: 'same-origin' })
           .then(handleResponse)
           .then(showMessage)
           .catch((err) => showMessage(err.message));
@@ -78,13 +78,10 @@
       };
 
       restButton.onclick = () => {
-        fetch('/noti', { method: 'POST', credentials: 'same-origin' })
+        fetch('/socket/noti', { method: 'POST', credentials: 'same-origin' })
           .then(handleResponse)
           .then(showMessage)
           .catch((err) => showMessage(err.message));
       };
     </script>
-  </body>
-</html>
-
-
+{% endblock %}

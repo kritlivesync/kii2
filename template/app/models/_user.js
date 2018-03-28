@@ -1,10 +1,16 @@
+
 module.exports = (Schema) => {
-    return {
-        name: { type: String },
-        ref: {
-            type: Schema.Types.ObjectId,
-            ref: '_db'
-        },
-        status: { type: Boolean, default: false },
-    }
+    return new Schema({
+        name: { type: String, default: '' },
+        email: { type: String, default: '' },
+        username: { type: String, default: '' },
+        provider: { type: String, default: '' },
+        hash: { type: String, default: '' },
+        salt: { type: String, default: '' },
+        authToken: { type: String, default: '' },
+        facebook: {},
+        twitter: {},
+        google: {},
+        linkedin: {}
+    });
 }

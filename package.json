@@ -23,7 +23,9 @@
   },
   "dependencies": {
     "async": "*",
+    "authenticator": "*",
     "body-parser": "*",
+    "bluebird": "*",
     "connect-redis": "*",
     "cookie-parser": "*",
     "crypto": "*",
@@ -44,6 +46,12 @@
     "qr-image": "*",
     "redis": "*",
     "swig": "*",
+    "passport": "*",
+    "passport-facebook": "*",
+    "passport-google-oauth": "*",
+    "passport-linkedin": "*",
+    "passport-local": "*",
+    "passport-twitter": "*",
     "ws": "2.3.0"
   }
 }

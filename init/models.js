@@ -14,7 +14,7 @@ function eachModel(db, dir) {
             var _key = dir.split('/').slice(-1).pop()
 
             if (_key == 'models') {
-                D[_name] = db.model(_name, new Schema(require(F.path.join(dir, name))(Schema)));
+                D[_name] = db.model(_name, require(F.path.join(dir, name))(Schema));
             }
 
         } else if (name !== '.DS_Store') {

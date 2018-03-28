@@ -1,7 +1,5 @@
 module.exports = async(app) => {
-    app
-        .route('/')
-        .get(async(req, res) => {
-            res.render('index', { title: 'Server'});
-        })
+    app.get('/', (req, res) => {
+        res.redirect('/example');
+    });
 };

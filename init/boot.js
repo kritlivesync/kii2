@@ -1,6 +1,7 @@
 module.exports = function(app) {
     var
         logger = require('morgan'),
+        passport = require('passport'),
         bodyParser = require('body-parser'),
         cookieParser = require('cookie-parser'),
         Session = require('express-session'),
@@ -29,6 +30,7 @@ module.exports = function(app) {
     app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
     app.use( L.session);
     app.use(i18n.init);
+
     i18n.configure({
         updateFiles: false,
         locales: C.ln,
