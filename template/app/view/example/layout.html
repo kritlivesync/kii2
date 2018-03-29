@@ -5,18 +5,9 @@
 		<title>Example</title>
 	</head>
 	<body>
-		{% if (!user) %}
 			<p>
-			<a href="/example/">Home</a> | 
-			<a href="/passport/login">Log In</a>
+			<a href="/example/">Home</a>
 			</p>
-		{% else %}
-			<p>
-			<a href="/example/">Home</a> | 
-			<a href="/passport/account">Account</a> | 
-			<a href="/passport/logout">Log Out</a>
-			</p>
-		{% endif %}
 	    {% block content %} {% endblock %}
 	    {% block js %} {% endblock %}
 	</body>

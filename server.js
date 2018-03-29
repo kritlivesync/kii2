@@ -2,7 +2,6 @@ exports.init = function(config) {
     var
         express = require('express'),
         path = require('path'),
-        passport = require('passport'),
         http = require('http'),
         app = express(),
         server = http.createServer(app);
@@ -26,7 +25,6 @@ exports.init = function(config) {
     require('kii2/init/models.js'); // model
     require('kii2/init/middles.js'); // middle
     require('kii2/init/boot.js')(app); // model
-    require('kii2/init/passport')(app,passport);
     require('kii2/init/services.js'); // service
     require('kii2/init/routes.js')(app, express); // router
     require('kii2/init/socket.js')(server);
@@ -34,6 +32,6 @@ exports.init = function(config) {
     // start server
     
     server.listen(C.port, () => {
-        console.log(`start http server ${C.domain.www} at ${C.port}`)
+        console.log(`kii2 start http server ${C.domain.www} at ${C.port}`)
     });
 }
